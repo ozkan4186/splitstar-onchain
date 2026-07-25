@@ -1,0 +1,33 @@
+# Bağımlılıklar
+node_modules
+dist
+dist-ssr
+
+# Loglar
+*.log
+npm-debug.log*
+
+# Ortam değişkenleri
+.env
+.env.local
+.env.*.local
+
+# Editör / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Vercel
+.vercel
+
+# Rust / Soroban
+target/
+contracts/out/
+**/*.rs.bk
