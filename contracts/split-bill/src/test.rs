@@ -94,9 +94,10 @@ fn events_are_published_for_creation_and_payment() {
     );
     s.contract.pay_share(&id, &s.ali);
 
-    // created + paid + done → en az 3 event
-    let events = s.env.events().all();
-    assert!(events.len() >= 3, "beklenen eventler yayınlanmadı: {}", events.len());
+    // created + paid + done → en az 3 event yayınlanmalı
+    let published = s.env.events().all();
+    let count = published.events().len();
+    assert!(count >= 3, "beklenen eventler yayınlanmadı: {count}");
 }
 
 #[test]

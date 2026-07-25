@@ -1,6 +1,8 @@
 [workspace]
 resolver = "2"
 members = ["contracts/*"]
+# Derlenen wasm'ın kopyalandığı klasör; crate değil, workspace üyesi sayılmasın.
+exclude = ["contracts/out"]
 
 [workspace.dependencies]
 soroban-sdk = "27.0.2"

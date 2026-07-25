@@ -2,11 +2,11 @@
   "network": "testnet",
   "rpcUrl": "https://soroban-testnet.stellar.org",
   "networkPassphrase": "Test SDF Network ; September 2015",
-  "nativeSac": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
-  "contractId": "",
-  "wasmHash": "",
-  "deployer": "",
-  "deployTx": "",
-  "uploadTx": "",
-  "deployedAt": ""
+  "contractId": "CCXCILUW5ID4DNW2MC7V7HVG2NEJS7TR6WGEH4ZEFMJH34DQTAPOFGXH",
+  "wasmHash": "880042593207a80e05d85d7da88fc6bb4549c0333f83ffb8ebb23c36fab0944f",
+  "deployer": "GBB6U7ZMK7YKM7VDY6VW65FA7IBWNLCXUWHJWBYWEI4P6IKEY4PZ4ZCZ",
+  "deployTx": "6242ad9bd4dd4861e21947e72aade1ad97c1d8fa45c07fe496854d480391a9ab",
+  "uploadTx": "ce64c285b212a4d92f89f88d206134ac8d0c82c00540b7a77246b5aa3d9dc17f",
+  "deployedAt": "2026-07-25T21:06:14.926Z",
+  "nativeSac": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
 }

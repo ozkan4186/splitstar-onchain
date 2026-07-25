@@ -12,8 +12,8 @@
 //! diğeri olmaz durumu oluşmaz.
 
 use soroban_sdk::{
-    contract, contracterror, contractimpl, contracttype, symbol_short, token, Address, Env, String,
-    Vec,
+    contract, contracterror, contractevent, contractimpl, contracttype, token, Address, Env,
+    String, Vec,
 };
 
 /// Kayıtların ledger'da yaşaması için TTL uzatma miktarı (~30 gün civarı ledger).
@@ -21,7 +21,7 @@ const BUMP_AMOUNT: u32 = 518_400;
 const LIFETIME_THRESHOLD: u32 = BUMP_AMOUNT - 17_280;
 
 #[contracttype]
-#[derive(Clone)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Share {
     pub who: Address,
     pub amount: i128,
@@ -29,7 +29,7 @@ pub struct Share {
 }
 
 #[contracttype]
-#[derive(Clone)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Split {
     pub id: u32,
     pub organizer: Address,
@@ -39,6 +39,38 @@ pub struct Split {
     pub total: i128,
     pub collected: i128,
     pub shares: Vec<Share>,
+}
+
+// --- Eventler ---------------------------------------------------------------
+// Tipli event tanımları: arayüz bunları RPC'den okuyup canlı akışta gösteriyor.
+// `#[topic]` işaretli alanlar indekslenebilir topic listesine girer.
+
+#[contractevent(topics = ["split", "created"])]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct SplitCreated {
+    #[topic]
+    pub split_id: u32,
+    pub organizer: Address,
+    pub total: i128,
+}
+
+#[contractevent(topics = ["share", "paid"])]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct SharePaid {
+    #[topic]
+    pub split_id: u32,
+    #[topic]
+    pub who: Address,
+    pub amount: i128,
+    pub collected: i128,
+}
+
+#[contractevent(topics = ["split", "done"])]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct SplitCompleted {
+    #[topic]
+    pub split_id: u32,
+    pub total: i128,
 }
 
 #[contracttype]
@@ -117,8 +149,7 @@ impl SplitBill {
         Self::save(&env, &split);
 
         // Arayüzün canlı yakalayabilmesi için event yayınla.
-        env.events()
-            .publish((symbol_short!("split"), symbol_short!("created")), (id, organizer, total));
+        SplitCreated { split_id: id, organizer, total }.publish(&env);
 
         Ok(id)
     }
@@ -157,16 +188,16 @@ impl SplitBill {
         let completed = split.collected >= split.total;
         Self::save(&env, &split);
 
-        env.events().publish(
-            (symbol_short!("share"), symbol_short!("paid")),
-            (split_id, from, amount, split.collected),
-        );
+        SharePaid {
+            split_id,
+            who: from,
+            amount,
+            collected: split.collected,
+        }
+        .publish(&env);
 
         if completed {
-            env.events().publish(
-                (symbol_short!("split"), symbol_short!("done")),
-                (split_id, split.total),
-            );
+            SplitCompleted { split_id, total: split.total }.publish(&env);
         }
 
         Ok(amount)

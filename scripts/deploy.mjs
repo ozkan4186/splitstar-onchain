@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync, existsSync, appendFileSync } from 'node:fs
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
+  Asset,
   Keypair,
   Networks,
   Operation,
@@ -127,6 +128,8 @@ async function main() {
     network: 'testnet',
     rpcUrl: RPC_URL,
     networkPassphrase: NETWORK,
+    // XLM'in Stellar Asset Contract adresi — kontrat ödemeleri bu token üzerinden yapar.
+    nativeSac: Asset.native().contractId(NETWORK),
     contractId,
     wasmHash: wasmHash.toString('hex'),
     deployer: kp.publicKey(),

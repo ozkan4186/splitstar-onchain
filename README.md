@@ -31,17 +31,17 @@ dinleyerek durumu **canlı** günceller.
 | | |
 |---|---|
 | **Ağ** | Stellar Testnet |
-| **Kontrat adresi** | `<CONTRACT_ID>` |
-| **Explorer** | <CONTRACT_EXPLORER> |
-| **Wasm hash** | `<WASM_HASH>` |
-| **Deploy işlemi** | <DEPLOY_TX> |
+| **Kontrat adresi** | `CCXCILUW5ID4DNW2MC7V7HVG2NEJS7TR6WGEH4ZEFMJH34DQTAPOFGXH` |
+| **Explorer** | [stellar.expert](https://stellar.expert/explorer/testnet/contract/CCXCILUW5ID4DNW2MC7V7HVG2NEJS7TR6WGEH4ZEFMJH34DQTAPOFGXH) |
+| **Wasm hash** | `880042593207a80e05d85d7da88fc6bb4549c0333f83ffb8ebb23c36fab0944f` |
+| **Deploy işlemi** | [6242ad9bd4dd4861…](https://stellar.expert/explorer/testnet/tx/6242ad9bd4dd4861e21947e72aade1ad97c1d8fa45c07fe496854d480391a9ab) |
 
 ### Örnek kontrat çağrısı (doğrulanabilir)
 
 | Çağrı | İşlem hash'i |
 |---|---|
-| `create_split` | <CREATE_TX> |
-| `pay_share` | <PAY_TX> |
+| `create_split` | [5ced6daa01402d20…](https://stellar.expert/explorer/testnet/tx/5ced6daa01402d20a160ecc0e7215e88d851067c615d432af3b3bde1492e07d9) |
+| `pay_share` | [510c8130436d11df…](https://stellar.expert/explorer/testnet/tx/510c8130436d11dfd80bc2781d039660c26bbb069090f80c8c5c44a8e31c55cb) |
 
 ---
 

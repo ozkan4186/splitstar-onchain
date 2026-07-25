@@ -3,26 +3,40 @@ import { EXPLORER } from '../lib/soroban'
 
 const short = (a) => (typeof a === 'string' && a.length > 12 ? `${a.slice(0, 4)}…${a.slice(-4)}` : a)
 
-/** Event topic'lerine göre okunabilir bir satır üretir. */
+/**
+ * Event'i okunabilir bir satıra çevirir.
+ *
+ * Kontrat `#[contractevent]` kullandığı için veri şu şekilde geliyor:
+ *   topics: ["split", "created", <split_id>]            value: { organizer, total }
+ *   topics: ["share", "paid", <split_id>, <who>]        value: { amount, collected }
+ *   topics: ["split", "done", <split_id>]               value: { total }
+ * `#[topic]` işaretli alanlar topic listesinde, diğerleri veri nesnesinde yer alır.
+ */
 function describe(event) {
-  const [subject, action] = event.topics || []
-  const v = event.value
+  const [subject, action, topicId, topicWho] = event.topics || []
+  const v = event.value && typeof event.value === 'object' ? event.value : {}
+  const id = topicId ?? v.split_id
 
   if (subject === 'split' && action === 'created') {
-    const [id, organizer, total] = v || []
-    return { icon: '📝', text: `Hesap #${id} oluşturuldu — ${fmt(total)} XLM · ${short(organizer)}` }
+    return {
+      icon: '📝',
+      text: `Hesap #${id} oluşturuldu — ${fmt(v.total)} XLM · ${short(v.organizer)}`,
+    }
   }
   if (subject === 'share' && action === 'paid') {
-    const [id, who, amount, collected] = v || []
-    return { icon: '💸', text: `${short(who)} → hesap #${id} için ${fmt(amount)} XLM ödedi (toplam ${fmt(collected)})` }
+    const who = topicWho ?? v.who
+    return {
+      icon: '💸',
+      text: `${short(who)} → hesap #${id} için ${fmt(v.amount)} XLM ödedi (toplam ${fmt(v.collected)})`,
+    }
   }
   if (subject === 'split' && action === 'done') {
-    const [id, total] = v || []
-    return { icon: '🎉', text: `Hesap #${id} tamamlandı — ${fmt(total)} XLM toplandı` }
+    return { icon: '🎉', text: `Hesap #${id} tamamlandı — ${fmt(v.total)} XLM toplandı` }
   }
   return { icon: '•', text: `${subject ?? '?'} / ${action ?? '?'}` }
 }
 
+// i128 alanlar BigInt olarak geliyor; XLM'e çevirip iki hane gösteriyoruz.
 const fmt = (stroops) => (stroops == null ? '?' : (Number(stroops) / 1e7).toFixed(2))
 
 export default function EventFeed({ events, live }) {
