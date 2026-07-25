@@ -142,19 +142,22 @@ Bir hesabı paylaşmak için adrese `?split=<numara>` ekleyebilirsin.
 
 ## 📸 Ekran görüntüleri
 
-| Cüzdan seçenekleri (StellarWalletsKit) | Kontrat durumu ve ödeme |
-|---|---|
-| ![Cüzdan seçenekleri](docs/screenshots/1-wallets.png) | ![Hesap durumu](docs/screenshots/2-split.png) |
+**Cüzdan seçenekleri — StellarWalletsKit modalı**
 
-| İşlem durumu takibi | Canlı event akışı |
+![Cüzdan seçenekleri](docs/screenshots/wallets.png)
+
+| Zincire yazma formu | Canlı olay akışı (kontrat eventleri) |
 |---|---|
-| ![İşlem durumu](docs/screenshots/3-tx-status.png) | ![Event akışı](docs/screenshots/4-events.png) |
+| ![Hesap oluşturma](docs/screenshots/split.png) | ![Event akışı](docs/screenshots/events.png) |
 
 ---
 
 ## 🌐 Canlı demo
 
-**<LIVE_URL>**
+### 👉 **https://splitstar-onchain.vercel.app**
+
+Yayındaki kontratla konuşur. Örnek hesabı görmek için:
+**<https://splitstar-onchain.vercel.app/?split=1>**
 
 ---
 
